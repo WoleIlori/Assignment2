@@ -2,6 +2,7 @@ void setup()
 {
  size(500, 500);
  slide = new Slider();
+ ball = new Ball(20.0f, 20.0f * 0.5f, 250.0f, 480.0f, 10.0f, 0.0f, -5.0f);
 
  
 }
@@ -41,6 +42,14 @@ void draw()
       line(0, 30, width, 30);
       slide.render();
       slide.update();
+      ball.render();
+      ball.update();
+      
+      //ball hitting the slider
+      if((ball.pos.y + ball.bRadius) > slide.top)
+      {
+        ball.speed.y = - ball.speed.y;
+      }
       break;
     }
     
