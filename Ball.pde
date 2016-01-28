@@ -23,6 +23,7 @@ class Ball
   {
     if(keys[' '])
     {
+      pos.x += speed.x;
       pos.y += speed.y;
     }
     
@@ -31,6 +32,20 @@ class Ball
     {
       pos.y = bRadius;
       speed.y = - speed.y;
+    }
+    
+     //changing directions after hitting the right wall
+    if((pos.x + bRadius) > width)
+    {
+      pos.x = width - bRadius;
+      speed.x = - speed.x;
+    }
+    
+    //changing directions after hitting the left wall
+    if(pos.x < bRadius)
+    {
+      pos.x = bRadius;
+      speed.x = - speed.x;
     }
   }
 }

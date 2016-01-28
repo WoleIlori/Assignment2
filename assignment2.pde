@@ -3,7 +3,7 @@ void setup()
  size(500, 500);
  slide = new Slider();
  ball = new Ball(20.0f, 20.0f * 0.5f, 250.0f, 480.0f, 10.0f, 0.0f, -5.0f);
-
+ dir = 0;
  
 }
 
@@ -11,6 +11,7 @@ Ball ball ;
 Slider slide;
 boolean[] keys = new boolean[512];
 int mode;
+float dir;
 
 
  
@@ -48,7 +49,19 @@ void draw()
       //ball hitting the slider
       if((ball.pos.y + ball.bRadius) > slide.top)
       {
-        ball.speed.y = - ball.speed.y;
+        if(ball.pos.x > slide.left  && ball.pos.x < (slide.pos.x + slide.halfW))
+        {
+          dir = ball.pos.x - slide.pos.x;
+          if(dir < 0)
+          {
+            ball.speed.x = dir / 10;
+          }
+          else
+          {
+            ball.speed.x = dir / 10;
+          }
+          ball.speed.y = - ball.speed.y;
+        }
       }
       break;
     }
