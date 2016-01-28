@@ -127,6 +127,17 @@ void collisionCheck()
        ball.speed.y = - ball.speed.y;
      }
    }
+   
+   //ball hitting the bottom of the brick
+    for(int i = 0; i < bricks.size(); i++)
+   {
+     //ball hits the bottom of the brick
+     if((ball.pos.y - ball.bRadius) < (bricks.get(i).pos.y + bricks.get(i).halfH))
+     {
+       ball.speed.y = - ball.speed.y;
+     }
+   }
+   
 }
 
 void mouseMoved()

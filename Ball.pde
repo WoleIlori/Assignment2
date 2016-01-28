@@ -65,7 +65,7 @@ class Ball extends GameObject
     
     if(lives == 0)
     {
-      mode = 0;
+      mode = 3;
     }
   }
 }
