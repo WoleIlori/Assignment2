@@ -4,7 +4,7 @@ void setup()
  slide = new Slider();
  ball = new Ball(20.0f, 20.0f * 0.5f, 250.0f, 480.0f, 10.0f, 0.0f, -5.0f);
  dir = 0;
- 
+ mCheck = false;
 }
 
 Ball ball ;
@@ -12,7 +12,7 @@ Slider slide;
 boolean[] keys = new boolean[512];
 int mode;
 float dir;
-
+boolean mCheck;
 
  
 
@@ -40,7 +40,7 @@ void draw()
     {
       background(0);
       fill(255);
-      line(0, 30, width, 30);
+      text("Lives: " +ball.lives, 40, 20);
       slide.render();
       slide.update();
       ball.render();
@@ -71,6 +71,9 @@ void draw()
 
 void mouseMoved()
 {
+  if(mCheck == true)
+  {
     slide.pos.x = mouseX;
+  }
  
 }

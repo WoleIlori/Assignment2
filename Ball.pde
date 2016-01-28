@@ -4,6 +4,9 @@ class Ball
   float bRadius;
   PVector pos;
   PVector speed;
+  int lives;
+  float tmpX;
+  float tmpY;
   color c;
   
   Ball(float bSize, float bRadius, float x, float y, float sHeight ,float xSpeed, float ySpeed)
@@ -11,7 +14,10 @@ class Ball
     pos = new PVector(x, (y - (sHeight / 2) - bRadius));
     this.bSize = bSize;
     this.bRadius = bRadius;
+    lives = 3;
     speed = new PVector(xSpeed, ySpeed); 
+    tmpX = pos.x;
+    tmpY = pos.y;
   }
   
   void render()
@@ -25,6 +31,7 @@ class Ball
     {
       pos.x += speed.x;
       pos.y += speed.y;
+      mCheck = true;
     }
     
      //changing directions after hitting the top
@@ -46,6 +53,17 @@ class Ball
     {
       pos.x = bRadius;
       speed.x = - speed.x;
+    }
+    
+    //reseting the ball when it goes past height of the screen
+    if((pos.y + bRadius) > height)
+    {
+      pos.x = tmpX;
+      pos.y = tmpY;
+      lives --;
+      mCheck = false;
+      keys[keyCode] = false;
+      speed.y = - speed.y;
     }
   }
 }

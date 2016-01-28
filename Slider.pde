@@ -45,6 +45,12 @@ class Slider
       pos.x = w * 0.5f;
     } 
     
+    if(mCheck == false)
+    {
+      pos.x = tmpX;
+      pos.y = tmpY;
+    }
+    
   }
   
 }
