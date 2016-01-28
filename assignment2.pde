@@ -73,6 +73,22 @@ void draw()
       break;
     }
     
+    case 2:
+    {
+      background(0);
+      textFont(font, 28);
+      text("Press 'Space' bar to launch ball.\nUse the mouse to move the paddle\nand collect powerups", 100, 200);
+      break;
+    }
+    
+    case 3:
+    {
+      background(0);
+      textFont(font, 28);
+      text("High Score", 200, 150);
+      break;
+    }
+    
   }//end switch
 }
 
