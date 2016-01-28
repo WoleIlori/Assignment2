@@ -1,13 +1,9 @@
-class Ball
+class Ball extends GameObject
 {
   float bSize;
   float bRadius;
-  PVector pos;
   PVector speed;
   int lives;
-  float tmpX;
-  float tmpY;
-  color c;
   
   Ball(float bSize, float bRadius, float x, float y, float sHeight ,float xSpeed, float ySpeed)
   {

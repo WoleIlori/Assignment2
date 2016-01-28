@@ -1,13 +1,10 @@
-class Brick
+class Brick extends GameObject
 {
   float w;
   float h;
-  PVector pos;
   float halfH;
   float halfW;
   int lives;
-  float tmpX;
-  float tmpY;
   
   Brick(float x, float y)
   {

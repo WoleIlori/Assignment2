@@ -1,14 +1,11 @@
-class Slider
+class Slider extends GameObject
 {
-  PVector pos;
   float w;
   float h;
   float left;
   float top;
   float halfH;
   float halfW;
-  float tmpX;
-  float tmpY;
   
   Slider()
   {
