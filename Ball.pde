@@ -35,9 +35,9 @@ class Ball
     }
     
      //changing directions after hitting the top
-    if(pos.y < bRadius)
+    if(pos.y - bRadius < 30)
     {
-      pos.y = bRadius;
+      pos.y = pos.y + bRadius;
       speed.y = - speed.y;
     }
     
