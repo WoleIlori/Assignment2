@@ -59,7 +59,13 @@ class Ball extends GameObject
       lives --;
       mCheck = false;
       keys[keyCode] = false;
+      speed.x = 0;
       speed.y = - speed.y;
+    }
+    
+    if(lives == 0)
+    {
+      mode = 0;
     }
   }
 }

@@ -6,9 +6,12 @@ void setup()
  rows = 3;
  cols = 5;
  dir = 0;
+ rebound = 0;
  mCheck = false;
+ bCheck = 0;
  brickW = 100;
  brickH = 25;
+ font = loadFont("AgencyFB-Reg-48.vlw");
 }
 
 ArrayList<Brick> bricks = new ArrayList<Brick>();
@@ -18,11 +21,13 @@ boolean[] keys = new boolean[512];
 int mode;
 float dir;
 boolean mCheck;
+PFont font;
+int bCheck;
 int rows;
 int cols;
 int brickW;
 int brickH;
- 
+float rebound;
 
 void keyPressed()
 {
@@ -40,7 +45,12 @@ void draw()
   {
     case 0:
     {
-      background(255);
+      background(0);
+      textFont(font, 32);
+      text("1. Play Game", 100, 50);
+      text("2. Instructions", 100, 100);
+      text("3. High Scores", 100, 150);
+      ball.lives = 3;
       break;
     }
     
@@ -49,6 +59,7 @@ void draw()
       background(0);
       stroke(255);
       line(0, 30, width, 30);
+      textFont(font, 18);
       text("Lives: " +ball.lives, 40, 20);
       stroke(0);
       drawBricks();
@@ -57,23 +68,8 @@ void draw()
       ball.render();
       ball.update();
       
-      //ball hitting the slider
-      if((ball.pos.y + ball.bRadius) > slide.top)
-      {
-        if(ball.pos.x > slide.left  && ball.pos.x < (slide.pos.x + slide.halfW))
-        {
-          dir = ball.pos.x - slide.pos.x;
-          if(dir < 0)
-          {
-            ball.speed.x = dir / 10;
-          }
-          else
-          {
-            ball.speed.x = dir / 10;
-          }
-          ball.speed.y = - ball.speed.y;
-        }
-      }
+      collisionCheck();
+      
       break;
     }
     
@@ -94,6 +90,27 @@ void drawBricks()
       bricks.add(b);
      }//end inner for
   }
+}
+
+void collisionCheck()
+{
+  //ball hitting the slider
+   if((ball.pos.y + ball.bRadius) > slide.top)
+   {
+     if(ball.pos.x > slide.left  && ball.pos.x < (slide.pos.x + slide.halfW))
+     {
+       dir = ball.pos.x - slide.pos.x;
+       if(dir < 0)
+       {
+         ball.speed.x = dir / 10;
+       }
+       else
+       {
+         ball.speed.x = dir / 10;
+       }
+       ball.speed.y = - ball.speed.y;
+     }
+   }
 }
 
 void mouseMoved()
