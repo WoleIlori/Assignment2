@@ -15,20 +15,13 @@ class Brick extends GameObject
     pos = new PVector(x + halfW, y + halfH);
     tmpX = x;
     tmpY = y;
-    this.lives = int(random(1, 3));
+    this.lives = 1;
+    c = 255;
 
   }
   
   void render()
   {
-    if(lives == 2)
-    {
-      c = color(255, 0, 0);
-    }
-    else
-    {
-      c = color(255);
-    }
     fill(c);
     rect(tmpX, tmpY, w, h);
   }

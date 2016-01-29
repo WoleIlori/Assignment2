@@ -137,12 +137,21 @@ void ballCollisions()
    for(int i = 0; i < bricks.size(); i++)
    {
      //ball hits the bottom of the brick
-     if((ball.pos.y - ball.bRadius) < (bricks.get(i).pos.y + bricks.get(i).halfH))
+     if((ball.pos.y - ball.bRadius) < (bricks.get(i).pos.y + bricks.get(i).halfH) && ball.pos.x > bricks.get(i).tmpX && ball.pos.x < (bricks.get(i).tmpX + bricks.get(i).w))
      {
        ball.speed.y = - ball.speed.y;
+       bricks.get(i).lives --;
+       checkLives(i);
      }
-   }
-        
+   }     
+}
+
+void checkLives(int index)
+{
+  if(bricks.get(index).lives == 0)
+  {
+    bricks.remove(index);
+  }
 }
 
 void mouseMoved()
