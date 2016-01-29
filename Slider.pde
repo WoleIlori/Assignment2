@@ -21,10 +21,12 @@ class Slider extends GameObject
     tmpY = pos.y;
     halfW = w * 0.5f;
     halfH = h * 0.5f;
+    c = 255;
   }
   
   void render()
   {
+    fill(c);
     left = pos.x - (w * 0.5f);
     top = pos.y - (h * 0.5f);
     rect(left, top, w, h);  

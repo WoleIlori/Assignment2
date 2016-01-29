@@ -12,6 +12,7 @@ void setup()
  brickW = 100;
  brickH = 25;
  font = loadFont("AgencyFB-Reg-48.vlw");
+ drawBricks();
 }
 
 ArrayList<Brick> bricks = new ArrayList<Brick>();
@@ -62,13 +63,16 @@ void draw()
       textFont(font, 18);
       text("Lives: " +ball.lives, 40, 20);
       stroke(0);
-      drawBricks();
+      for(int i = 0; i < bricks.size(); i++)
+      {
+        bricks.get(i).render();
+      }
       slide.render();
       slide.update();
       ball.render();
       ball.update();
       
-      collisionCheck();
+      ballCollisions();
       
       break;
     }
@@ -102,13 +106,14 @@ void drawBricks()
       float x = col * brickW;
       float y = 50.0f + (row * brickH);
       Brick b = new Brick(x, y);
-      b.render();
+      //b.render();
       bricks.add(b);
+      println(b.lives);
      }//end inner for
   }
 }
 
-void collisionCheck()
+void ballCollisions()
 {
   //ball hitting the slider
    if((ball.pos.y + ball.bRadius) > slide.top)
@@ -128,8 +133,8 @@ void collisionCheck()
      }
    }
    
-   //ball hitting the bottom of the brick
-    for(int i = 0; i < bricks.size(); i++)
+   //ball hitting the brick
+   for(int i = 0; i < bricks.size(); i++)
    {
      //ball hits the bottom of the brick
      if((ball.pos.y - ball.bRadius) < (bricks.get(i).pos.y + bricks.get(i).halfH))
@@ -137,7 +142,7 @@ void collisionCheck()
        ball.speed.y = - ball.speed.y;
      }
    }
-   
+        
 }
 
 void mouseMoved()

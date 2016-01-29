@@ -14,10 +14,12 @@ class Ball extends GameObject
     speed = new PVector(xSpeed, ySpeed); 
     tmpX = pos.x;
     tmpY = pos.y;
+    c = 255;
   }
   
   void render()
   {
+    fill(c);
     ellipse(pos.x, pos.y, bSize, bSize);
   }
   
