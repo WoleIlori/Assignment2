@@ -3,6 +3,7 @@ class Ball extends GameObject
   float bSize;
   float bRadius;
   PVector speed;
+  PVector ballPos;
   int lives;
   
   Ball(float bSize, float bRadius, float x, float y, float sHeight ,float xSpeed, float ySpeed)
@@ -16,6 +17,14 @@ class Ball extends GameObject
     tmpY = pos.y;
     c = 255;
   }
+  
+  Ball(float x, float y, float bSize)
+  {
+    pos = new PVector(x , y);
+    this.bSize = bSize;
+    c = 126;
+  }
+  
   
   void render()
   {

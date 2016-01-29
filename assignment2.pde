@@ -16,6 +16,7 @@ void setup()
 }
 
 ArrayList<Brick> bricks = new ArrayList<Brick>();
+Ball[] lifeBalls;
 Ball ball;
 Slider slide;
 boolean[] keys = new boolean[512];
@@ -58,10 +59,7 @@ void draw()
     case 1:
     {
       background(0);
-      stroke(255);
-      line(0, 30, width, 30);
-      textFont(font, 18);
-      text("Lives: " +ball.lives, 40, 20);
+      displayStatus();
       stroke(0);
       for(int i = 0; i < bricks.size(); i++)
       {
@@ -153,6 +151,23 @@ void checkLives(int index)
     bricks.remove(index);
   }
 }
+
+void displayStatus()
+{
+  lifeBalls =  new Ball[ball.lives];
+  stroke(255);
+  line(0, 30, width, 30);
+  textFont(font, 18);
+  text("Lives: ", 40, 20);
+  for(int i = 0; i < lifeBalls.length; i++)
+  {
+    float ballX = 80 + (i * 20);
+    Ball ball = new Ball(ballX, 15, 10);
+    ball.render();
+    lifeBalls[i] = ball;
+  }
+}
+  
 
 void mouseMoved()
 {
