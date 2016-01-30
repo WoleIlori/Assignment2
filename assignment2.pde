@@ -148,8 +148,23 @@ void ballCollisions()
        hScore += 50;
      }
      
+     //ball hits the top of the brick
+     if((ball.pos.y + ball.bRadius) > (bricks.get(i).tmpY) && ball.pos.x > bricks.get(i).tmpX && ball.pos.x < (bricks.get(i).tmpX + bricks.get(i).w) && (ball.pos.y + ball.bRadius) < bricks.get(i).pos.y)
+     {
+       ball.pos.y = (bricks.get(i).pos.y - bricks.get(i).halfH) - ball.bRadius;
+       ball.speed.y = - ball.speed.y;
+       bricks.get(i).lives --;
+       hScore += 50;
+     }
      
-     
+     //ball hits the left side of the brick
+     if((ball.pos.x + ball.bRadius) > bricks.get(i).tmpX && (ball.pos.x + ball.bRadius) < bricks.get(i).pos.x && ball.pos.y > bricks.get(i).tmpY && ball.pos.y < (bricks.get(i).tmpY + bricks.get(i).h))
+     {
+       ball.pos.x = bricks.get(i).tmpX - ball.bRadius;
+       ball.speed.x = - ball.speed.x;
+       bricks.get(i).lives --;
+       hScore += 50;
+     }
      
    }     
 }
@@ -163,6 +178,12 @@ void checkLives()
       bricks.remove(i);
     }
   }
+  /*
+  if(bricks.size() == 0)
+  {
+    level = 2;
+  }
+  */
 }
 
 void displayStatus()
@@ -171,15 +192,17 @@ void displayStatus()
   stroke(255);
   line(0, 30, width, 30);
   textFont(font, 18);
-  text("Lives: ", 40, 20);
+  text("Level: " + level, 40, 20);
+  text("Lives: ", 200 , 20);
+  text("Score: "+ hScore, 400, 20);
+  
   for(int i = 0; i < lifeBalls.length; i++)
   {
-    float ballX = 80 + (i * 20);
+    float ballX = 250 + (i * 20);
     Ball ball = new Ball(ballX, 15, 10);
-    ball.render();
+    ball.render(); 
     lifeBalls[i] = ball;
   }
-  text("Score: "+ hScore, 200, 20);
 }
   
 

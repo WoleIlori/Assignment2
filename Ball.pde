@@ -76,7 +76,18 @@ class Ball extends GameObject
     
     if(lives == 0)
     {
-      mode = 3;
+      mode = 0;
+    }
+    
+    //reset the ball when the bircks are cleared
+    if(bricks.size() == 0)
+    {
+      pos.x = tmpX;
+      pos.y = tmpY;
+       mCheck = false;
+      keys[keyCode] = false;
+      speed.x = 0;
+      speed.y = - speed.y;
     }
   }
 }
