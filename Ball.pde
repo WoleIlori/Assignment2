@@ -25,7 +25,6 @@ class Ball extends GameObject
     c = 126;
   }
   
-  
   void render()
   {
     fill(c);
@@ -79,12 +78,13 @@ class Ball extends GameObject
       mode = 0;
     }
     
-    //reset the ball when the bircks are cleared
+    //reset the ball when the bricks are cleared
     if(bricks.size() == 0)
     {
       pos.x = tmpX;
       pos.y = tmpY;
-       mCheck = false;
+      mCheck = false;
+      lives = 3;
       keys[keyCode] = false;
       speed.x = 0;
       speed.y = - speed.y;

@@ -1,5 +1,7 @@
 class Brick extends GameObject
 {
+  float left;
+  float top;
   float w;
   float h;
   float halfH;
@@ -12,13 +14,12 @@ class Brick extends GameObject
     h = 26;
     halfW = w * 0.5f;
     halfH = h * 0.5f;
+    this.left = x;
+    this.top = y;
     pos = new PVector(x + halfW, y + halfH);
-    tmpX = x;
-    tmpY = y;
-    this.lives = 1;
+    tmpX = this.left;
+    tmpY = this.top;
     this.lives = int(random(1, 3));
-
-
   }
   
   void render()
@@ -33,6 +34,6 @@ class Brick extends GameObject
     }
     
     fill(c);
-    rect(tmpX, tmpY, w, h);
+    rect(left, top, w, h);
   }
 }
