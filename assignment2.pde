@@ -109,7 +109,6 @@ void drawBricks()
       float x = col * brickW;
       float y = 80.0f + (row * brickH);
       Brick b = new Brick(x, y);
-      //b.render();
       bricks.add(b);
       println(b.lives);
      }//end inner for
@@ -164,6 +163,14 @@ void ballCollisions()
        ball.speed.x = - ball.speed.x;
        bricks.get(i).lives --;
        hScore += 50;
+     }
+     
+     //ball hits the right side of the brick
+     if((ball.pos.x - ball.bRadius) < (bricks.get(i).tmpX + bricks.get(i).w) && (ball.pos.x - ball.bRadius) > bricks.get(i).pos.x && ball.pos.y > bricks.get(i).tmpY && ball.pos.y < (bricks.get(i).tmpY + bricks.get(i).h)  )
+     {
+       ball.pos.x = (bricks.get(i).tmpX + bricks.get(i).w) + ball.bRadius;
+       ball.speed.x = - ball.speed.x;
+       bricks.get(i).lives --;
      }
      
    }     
