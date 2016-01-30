@@ -11,6 +11,8 @@ void setup()
  bCheck = 0;
  brickW = 100;
  brickH = 25;
+ level = 1;
+ hScore = 0;
  font = loadFont("AgencyFB-Reg-48.vlw");
  drawBricks();
 }
@@ -29,7 +31,9 @@ int rows;
 int cols;
 int brickW;
 int brickH;
+int hScore;
 float rebound;
+int level;
 
 void keyPressed()
 {
@@ -61,6 +65,7 @@ void draw()
       background(0);
       displayStatus();
       stroke(0);
+      checkLives();
       for(int i = 0; i < bricks.size(); i++)
       {
         bricks.get(i).render();
@@ -102,7 +107,7 @@ void drawBricks()
     for(int col = 0; col < cols; col ++)
     {
       float x = col * brickW;
-      float y = 50.0f + (row * brickH);
+      float y = 80.0f + (row * brickH);
       Brick b = new Brick(x, y);
       //b.render();
       bricks.add(b);
@@ -135,20 +140,28 @@ void ballCollisions()
    for(int i = 0; i < bricks.size(); i++)
    {
      //ball hits the bottom of the brick
-     if((ball.pos.y - ball.bRadius) < (bricks.get(i).pos.y + bricks.get(i).halfH) && ball.pos.x > bricks.get(i).tmpX && ball.pos.x < (bricks.get(i).tmpX + bricks.get(i).w))
+     if((ball.pos.y - ball.bRadius) < (bricks.get(i).tmpY + bricks.get(i).h) && ball.pos.x > bricks.get(i).tmpX && ball.pos.x < (bricks.get(i).tmpX + bricks.get(i).w) && (ball.pos.y - ball.bRadius) > bricks.get(i).pos.y)
      {
+       ball.pos.y = (bricks.get(i).tmpY + bricks.get(i).h) + ball.bRadius;
        ball.speed.y = - ball.speed.y;
        bricks.get(i).lives --;
-       checkLives(i);
+       hScore += 50;
      }
+     
+     
+     
+     
    }     
 }
 
-void checkLives(int index)
+void checkLives()
 {
-  if(bricks.get(index).lives == 0)
+  for(int i = 0; i < bricks.size(); i++)
   {
-    bricks.remove(index);
+    if(bricks.get(i).lives == 0)
+    {
+      bricks.remove(i);
+    }
   }
 }
 
@@ -166,6 +179,7 @@ void displayStatus()
     ball.render();
     lifeBalls[i] = ball;
   }
+  text("Score: "+ hScore, 200, 20);
 }
   
 
