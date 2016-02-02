@@ -73,10 +73,6 @@ class Ball extends GameObject
       speed.y = - speed.y;
     }
     
-    if(lives == 0)
-    {
-      mode = 0;
-    }
     
     //reset the ball when the bricks are cleared
     if(bricks.size() == 0)

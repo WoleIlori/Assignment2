@@ -1,32 +1,34 @@
 void setup()
 {
- size(500, 500);
+ size(500, 500); //size(800, 500);
  slide = new Slider();
  ball = new Ball(20.0f, 20.0f * 0.5f, 250.0f, 480.0f, 10.0f, 0.0f, -5.0f);
  rows = 3;
  cols = 5;
- //tmp = new Brick[rows * cols];
  dir = 0;
+ reset = false;
  mCheck = false;
- bCheck = 0;
  brickW = 100;
  brickH = 25;
- level = 1;
  hScore = 0;
+ level = 1;
  font = loadFont("AgencyFB-Reg-48.vlw");
  drawBricks();
 }
 
 ArrayList<Brick> bricks = new ArrayList<Brick>();
+ArrayList<Brick> bricks2 = new ArrayList<Brick>();
+
 Ball[] lifeBalls;
 Ball ball;
 Slider slide;
 boolean[] keys = new boolean[512];
+boolean reset;
 int mode;
 float dir;
 boolean mCheck;
 PFont font;
-int bCheck;
+boolean bCheck;
 int rows;
 int cols;
 int brickW;
@@ -34,13 +36,24 @@ int brickH;
 int hScore;
 int level;
 
+
 void keyPressed()
 {
   if (key >= '0' && key <='9')
   {
     mode = key - '0';
+    println(mode);
+    keys[keyCode] = true;
   }
-  keys[keyCode] = true;
+  
+  if(mode == 0 || mode == 2 || mode == 3)
+  {
+    keys[keyCode] = false;
+  }
+  else
+  {
+    keys[keyCode] = true;
+  }
 }
 
 
@@ -56,29 +69,53 @@ void draw()
       text("2. Instructions", 100, 100);
       text("3. High Scores", 100, 150);
       ball.lives = 3;
+      hScore = 0;
       break;
     }
     
     case 1:
     {
+      if(reset)
+      {
+        drawBricks();
+        reset = false;
+      }
       background(0);
       displayStatus();
       stroke(0);
       checkLives();
-      for(int i = 0; i < bricks.size(); i++)
+      
+      if(level == 1)
       {
-        bricks.get(i).render();
+        for(int i = 0; i < bricks.size(); i++)
+        {
+          bricks.get(i).render();
+        }
       }
+      
+      if(level == 2)
+      {
+        for(int i = 0; i < bricks2.size(); i++)
+        {
+          bricks2.get(i).render();
+        }
+      } 
+      
       slide.render();
       slide.update();
       ball.render();
       ball.update();
       
       ballCollisions();
+      
+      
       if(ball.lives == 0)
       {
-        drawBricks();
+        reset = true;
+        mode = 0;
+        removeBricks();
       }
+     
       break;
     }
     
@@ -114,10 +151,24 @@ void drawBricks()
         float y = 80.0f + (row * brickH);
         Brick b = new Brick(x, y);
         bricks.add(b);
-        println(b.lives);
        }//end inner for
     }
   }
+  
+  if(level == 2)
+  {
+    for(int row = 0; row < rows; row ++)
+    {
+      for(int col = 0; col < cols; col ++)
+      {
+        float x = col * (brickW);
+        float y = (40.0f * (row + 1)) + (row * brickH);
+        Brick b2 = new Brick(x, y);
+        bricks2.add(b2);
+      }
+    }
+  }
+        
 }
 
 void ballCollisions()
@@ -150,6 +201,7 @@ void ballCollisions()
        ball.speed.y = - ball.speed.y;
        bricks.get(i).lives --;
        hScore += 50;
+       println(bricks.get(i).lives);
      }
      
      //ball hits the top of the brick
@@ -159,24 +211,29 @@ void ballCollisions()
        ball.speed.y = - ball.speed.y;
        bricks.get(i).lives --;
        hScore += 50;
+       println(bricks.get(i).lives);
      }
      
      //ball hits the left side of the brick
      if((ball.pos.x + ball.bRadius) > bricks.get(i).left && (ball.pos.x + ball.bRadius) < bricks.get(i).pos.x && ball.pos.y > bricks.get(i).top && ball.pos.y < (bricks.get(i).top + bricks.get(i).h))
      {
        ball.pos.x = bricks.get(i).left - ball.bRadius;
+       ball.speed.x = 5.0f;
        ball.speed.x = - ball.speed.x;
        bricks.get(i).lives --;
        hScore += 50;
+       println(bricks.get(i).lives);
      }
      
      //ball hits the right side of the brick
      if((ball.pos.x - ball.bRadius) < (bricks.get(i).left + bricks.get(i).w) && (ball.pos.x - ball.bRadius) > bricks.get(i).pos.x && ball.pos.y > bricks.get(i).top && ball.pos.y < (bricks.get(i).top + bricks.get(i).h) )
      {
        ball.pos.x = (bricks.get(i).left + bricks.get(i).w) + ball.bRadius;
+       ball.speed.x = -5.0f;
        ball.speed.x = - ball.speed.x;
        bricks.get(i).lives --;
        hScore += 50;
+       println(bricks.get(i).lives);
      }
      
    }     
@@ -184,18 +241,14 @@ void ballCollisions()
 
 void checkLives()
 {
+  //check if one of the bricks is hit 
+  //remove the brick that got hit
   for(int i = 0; i < bricks.size(); i++)
   {
     if(bricks.get(i).lives == 0)
     {
       bricks.remove(i);
     }
-  }
-  
-  
-  if(bricks.size() == 0)
-  {
-    level = 2;
   }
   
 }
@@ -219,6 +272,13 @@ void displayStatus()
   }
 }
   
+void removeBricks()
+{
+  for(int i = bricks.size() - 1; i >= 0; i--)
+  {
+    bricks.remove(i);
+  }
+}
 
 void mouseMoved()
 {
