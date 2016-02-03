@@ -247,6 +247,14 @@ void checkLives()
     level = 2;
     reset = ! reset;
   }
+  
+  if(ball.lives == 0)
+    {
+      reset = true;
+      mode = 0;
+      level = 1;
+      removeBricks();
+    }
 }
 
 void displayStatus()
