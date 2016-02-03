@@ -17,7 +17,7 @@ void setup()
 }
 
 ArrayList<Brick> bricks = new ArrayList<Brick>();
-ArrayList<Brick> bricks2 = new ArrayList<Brick>();
+//ArrayList<Brick> bricks2 = new ArrayList<Brick>();
 
 Ball[] lifeBalls;
 Ball ball;
@@ -28,7 +28,6 @@ int mode;
 float dir;
 boolean mCheck;
 PFont font;
-boolean bCheck;
 int rows;
 int cols;
 int brickW;
@@ -78,12 +77,14 @@ void draw()
       if(reset)
       {
         drawBricks();
-        reset = false;
+        reset = ! reset;
+        println(reset);
       }
       background(0);
       displayStatus();
       stroke(0);
       checkLives();
+      
       
       if(level == 1)
       {
@@ -93,11 +94,13 @@ void draw()
         }
       }
       
+      
+      
       if(level == 2)
       {
-        for(int i = 0; i < bricks2.size(); i++)
+        for(int i = 0; i < bricks.size(); i++)
         {
-          bricks2.get(i).render();
+          bricks.get(i).render();
         }
       } 
       
@@ -105,16 +108,8 @@ void draw()
       slide.update();
       ball.render();
       ball.update();
-      
       ballCollisions();
-      
-      
-      if(ball.lives == 0)
-      {
-        reset = true;
-        mode = 0;
-        removeBricks();
-      }
+      //println(bricks2.size());
      
       break;
     }
@@ -164,7 +159,7 @@ void drawBricks()
         float x = col * (brickW);
         float y = (40.0f * (row + 1)) + (row * brickH);
         Brick b2 = new Brick(x, y);
-        bricks2.add(b2);
+        bricks.add(b2);
       }
     }
   }
@@ -201,7 +196,6 @@ void ballCollisions()
        ball.speed.y = - ball.speed.y;
        bricks.get(i).lives --;
        hScore += 50;
-       println(bricks.get(i).lives);
      }
      
      //ball hits the top of the brick
@@ -211,7 +205,6 @@ void ballCollisions()
        ball.speed.y = - ball.speed.y;
        bricks.get(i).lives --;
        hScore += 50;
-       println(bricks.get(i).lives);
      }
      
      //ball hits the left side of the brick
@@ -221,8 +214,6 @@ void ballCollisions()
        ball.speed.x = 5.0f;
        ball.speed.x = - ball.speed.x;
        bricks.get(i).lives --;
-       hScore += 50;
-       println(bricks.get(i).lives);
      }
      
      //ball hits the right side of the brick
@@ -233,7 +224,6 @@ void ballCollisions()
        ball.speed.x = - ball.speed.x;
        bricks.get(i).lives --;
        hScore += 50;
-       println(bricks.get(i).lives);
      }
      
    }     
@@ -248,9 +238,15 @@ void checkLives()
     if(bricks.get(i).lives == 0)
     {
       bricks.remove(i);
+      println(bricks.size());
     }
   }
   
+  if(bricks.size() == 0 && ball.lives > 0)
+  {  
+    level = 2;
+    reset = ! reset;
+  }
 }
 
 void displayStatus()
