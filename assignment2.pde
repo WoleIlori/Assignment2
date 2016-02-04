@@ -244,7 +244,12 @@ void checkLives()
   
   if(bricks.size() == 0 && ball.lives > 0)
   {  
-    level = 2;
+    level ++;
+    if(level == 3)
+    {
+      mode = 0;
+      level = 1;
+    }
     reset = ! reset;
   }
   
