@@ -1,4 +1,4 @@
-class Slider extends GameObject
+class Paddle extends GameObject
 {
   float h;
   float left;
@@ -7,12 +7,12 @@ class Slider extends GameObject
   float halfW;
   float tmpX, tmpY;
   
-  Slider()
+  Paddle()
   {
     this(width * 0.3f, height * 0.02f, width * 0.5f, height - 20.0f);
   }
   
-  Slider(float w, float h, float x, float y)
+  Paddle(float w, float h, float x, float y)
   {
     super(x, y, w);
     this.h = h;

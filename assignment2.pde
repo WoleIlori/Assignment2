@@ -1,27 +1,29 @@
 void setup()
 {
  size(500, 500); //size(800, 500);
- slide = new Slider();
+ paddle = new Paddle();
+ gameObjects.add(paddle);
  ball = new Ball(20.0f, 250.0f, 480.0f, 10.0f, 0.0f, -5.0f);
+ gameObjects.add(ball);
+ brickW = 100.0f;
+ brickH = 25.0f;
  rows = 3;
- cols = 5;
+ cols = width / (int) brickW;
  dir = 0;
  reset = false;
  mCheck = false;
- brickW = 100.0f;
- brickH = 25.0f;
  hScore = 0;
- level = 2;
+ level = 1;
  font = loadFont("AgencyFB-Reg-48.vlw");
  drawBricks();
+ println(cols);
 }
 
+ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 ArrayList<Brick> bricks = new ArrayList<Brick>();
-//ArrayList<Brick> bricks2 = new ArrayList<Brick>();
-
 Ball[] lifeBalls;
 Ball ball;
-Slider slide;
+Paddle paddle;
 boolean[] keys = new boolean[512];
 boolean reset;
 int mode;
@@ -104,8 +106,8 @@ void draw()
         }
       } 
       
-      slide.render();
-      slide.update();
+      paddle.render();
+      paddle.update();
       ball.render();
       ball.update();
       ballCollisions();
@@ -152,11 +154,13 @@ void drawBricks()
   
   if(level == 2)
   {
+    brickW = 70.0f;
+    cols = width / (int) brickW;
     for(int row = 0; row < rows; row ++)
     {
-      for(int col = 0; col < cols; col ++)
+      for(int col = 0 ; col < cols - 1; col ++)
       {
-        float x = col * (brickW);
+        float x = 40.0f + (col * (brickW));
         float y = (40.0f * (row + 1)) + (row * brickH);
         Brick b2 = new Brick(x, y, brickW, brickH);
         bricks.add(b2);
@@ -168,12 +172,12 @@ void drawBricks()
 
 void ballCollisions()
 {
-  //ball hitting the slider
-   if((ball.pos.y + ball.bRadius) > slide.top)
+  //ball hitting the paddle
+   if((ball.pos.y + ball.bRadius) > paddle.top)
    {
-     if(ball.pos.x > slide.left  && ball.pos.x < (slide.pos.x + slide.halfW))
+     if(ball.pos.x > paddle.left  && ball.pos.x < (paddle.pos.x + paddle.halfW))
      {
-       dir = ball.pos.x - slide.pos.x;
+       dir = ball.pos.x - paddle.pos.x;
        if(dir < 0)
        {
          ball.speed.x = dir / 10;
@@ -254,12 +258,12 @@ void checkLives()
   }
   
   if(ball.lives == 0)
-    {
-      reset = true;
-      mode = 0;
-      level = 1;
-      removeBricks();
-    }
+  {
+    reset = true;
+    mode = 0;
+    level = 1;
+    removeBricks();
+  }
 }
 
 void displayStatus()
@@ -293,7 +297,7 @@ void mouseMoved()
 {
   if(mCheck == true)
   {
-    slide.pos.x = mouseX;
+    paddle.pos.x = mouseX;
   }
  
 }

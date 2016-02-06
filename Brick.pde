@@ -33,8 +33,5 @@ class Brick extends GameObject
     fill(c);
     rect(left, top, w, h);
   }
-  
 
-    
-  
 }
