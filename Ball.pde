@@ -1,17 +1,14 @@
 class Ball extends GameObject
 {
-  //float bSize;
   float bRadius;
   PVector speed;
-  //PVector ballPos;
   int lives;
   float tmpX, tmpY;
   
-  Ball(float bSize, float bRadius, float x, float y, float sHeight ,float xSpeed, float ySpeed)
+  Ball(float bSize, float x, float y, float sHeight ,float xSpeed, float ySpeed)
   {
-    super(x, (y - (sHeight / 2) - bRadius), bSize);//pos = new PVector(x, (y - (sHeight / 2) - bRadius));
-    //this.bSize = bSize;
-    this.bRadius = bRadius;
+    super(x, (y - (sHeight / 2) - (bSize * 0.5f)), bSize);
+    this.bRadius = this.w * 0.5f;
     lives = 3;
     speed = new PVector(xSpeed, ySpeed); 
     tmpX = pos.x;
@@ -22,8 +19,6 @@ class Ball extends GameObject
   Ball(float x, float y, float bSize)
   {
     super(x, y, bSize);
-    //pos = new PVector(x , y);
-    //this.bSize = bSize;
     c = 126;
   }
   

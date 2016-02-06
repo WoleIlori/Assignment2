@@ -2,16 +2,16 @@ void setup()
 {
  size(500, 500); //size(800, 500);
  slide = new Slider();
- ball = new Ball(20.0f, 20.0f * 0.5f, 250.0f, 480.0f, 10.0f, 0.0f, -5.0f);
+ ball = new Ball(20.0f, 250.0f, 480.0f, 10.0f, 0.0f, -5.0f);
  rows = 3;
  cols = 5;
  dir = 0;
  reset = false;
  mCheck = false;
- brickW = 100;
- brickH = 26;
+ brickW = 100.0f;
+ brickH = 25.0f;
  hScore = 0;
- level = 1;
+ level = 2;
  font = loadFont("AgencyFB-Reg-48.vlw");
  drawBricks();
 }
@@ -30,8 +30,8 @@ boolean mCheck;
 PFont font;
 int rows;
 int cols;
-int brickW;
-int brickH;
+float brickW;
+float brickH;
 int hScore;
 int level;
 

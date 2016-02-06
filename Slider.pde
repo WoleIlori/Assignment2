@@ -1,6 +1,5 @@
 class Slider extends GameObject
 {
-  //float w;
   float h;
   float left;
   float top;
@@ -16,9 +15,7 @@ class Slider extends GameObject
   Slider(float w, float h, float x, float y)
   {
     super(x, y, w);
-    //this.w = w;
     this.h = h;
-    //pos = new PVector(x, y);
     tmpX = pos.x;
     tmpY = pos.y;
     halfW = w * 0.5f;
@@ -29,8 +26,8 @@ class Slider extends GameObject
   void render()
   {
     fill(c);
-    left = pos.x - (w * 0.5f);
-    top = pos.y - (h * 0.5f);
+    left = pos.x - halfW;
+    top = pos.y - halfH;
     rect(left, top, w, h);  
   }
   
