@@ -1,9 +1,14 @@
 abstract class GameObject
 {
   PVector pos;
-  float tmpX;
-  float tmpY;
+  float w;
   color c;
+  
+  GameObject(float x, float y, float w)
+  {
+    pos = new PVector(x, y);
+    this.w = w;
+  }
   
   abstract void render();
   

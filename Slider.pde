@@ -1,11 +1,12 @@
 class Slider extends GameObject
 {
-  float w;
+  //float w;
   float h;
   float left;
   float top;
   float halfH;
   float halfW;
+  float tmpX, tmpY;
   
   Slider()
   {
@@ -14,9 +15,10 @@ class Slider extends GameObject
   
   Slider(float w, float h, float x, float y)
   {
-    this.w = w;
+    super(x, y, w);
+    //this.w = w;
     this.h = h;
-    pos = new PVector(x, y);
+    //pos = new PVector(x, y);
     tmpX = pos.x;
     tmpY = pos.y;
     halfW = w * 0.5f;

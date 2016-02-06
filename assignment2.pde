@@ -9,7 +9,7 @@ void setup()
  reset = false;
  mCheck = false;
  brickW = 100;
- brickH = 25;
+ brickH = 26;
  hScore = 0;
  level = 1;
  font = loadFont("AgencyFB-Reg-48.vlw");
@@ -144,7 +144,7 @@ void drawBricks()
       {
         float x = col * brickW;
         float y = 80.0f + (row * brickH);
-        Brick b = new Brick(x, y);
+        Brick b = new Brick(x, y, brickW, brickH);
         bricks.add(b);
        }//end inner for
     }
@@ -158,7 +158,7 @@ void drawBricks()
       {
         float x = col * (brickW);
         float y = (40.0f * (row + 1)) + (row * brickH);
-        Brick b2 = new Brick(x, y);
+        Brick b2 = new Brick(x, y, brickW, brickH);
         bricks.add(b2);
       }
     }
