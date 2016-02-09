@@ -65,8 +65,7 @@ class Ball extends GameObject
       pos.y = tmpY;
       lives --;
       mCheck = false;
-      keys[keyCode] = false;
-      speed.x = 0;
+      speed.x = 0;   
       speed.y = - speed.y;
     }
     

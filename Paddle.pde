@@ -6,22 +6,30 @@ class Paddle extends GameObject
   float halfH;
   float halfW;
   float tmpX, tmpY;
+  char fire;
+  int ammo;
   
+  /*
   Paddle()
   {
-    this(width * 0.3f, height * 0.02f, width * 0.5f, height - 20.0f);
+    this();
   }
+  */
   
-  Paddle(float w, float h, float x, float y)
+  Paddle(float w, float h, float x, float y, char fire)
   {
     super(x, y, w);
     this.h = h;
+    this.fire = fire;
     tmpX = pos.x;
     tmpY = pos.y;
     halfW = w * 0.5f;
     halfH = h * 0.5f;
     c = 255;
+    ammo = 5;
   }
+  
+  int elapsed = 12;
   
   void render()
   {
@@ -49,6 +57,23 @@ class Paddle extends GameObject
       pos.y = tmpY;
     }
     
+    if( elapsed > 12)
+    {
+      if(keyPressed)
+      {
+        if(key == 'f')
+        {
+          Bullet bullet = new Bullet();
+          bullet.pos.x = pos.x;
+          bullet.pos.y = pos.y;
+          bullets.add(bullet);
+          elapsed = 0;
+          //gameObjects.add(bullet);
+          ammo --;
+        }
+      }
+    }
+    elapsed ++;
   }
   
 }

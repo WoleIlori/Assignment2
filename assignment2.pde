@@ -1,26 +1,26 @@
 void setup()
 {
  size(500, 500); //size(800, 500);
- paddle = new Paddle();
+ paddle = new Paddle(width * 0.3f, height * 0.02f, width * 0.5f, height - 20.0f, 'F');
  gameObjects.add(paddle);
  ball = new Ball(20.0f, 250.0f, 480.0f, 10.0f, 0.0f, -5.0f);
  gameObjects.add(ball);
- brickW = 100.0f;
- brickH = 25.0f;
  rows = 3;
- cols = width / (int) brickW;
+ cols = 5;
  dir = 0;
  reset = false;
  mCheck = false;
+ brickW = 100.0f;
+ brickH = 25.0f;
  hScore = 0;
  level = 1;
  font = loadFont("AgencyFB-Reg-48.vlw");
  drawBricks();
- println(cols);
 }
 
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 ArrayList<Brick> bricks = new ArrayList<Brick>();
+ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 Ball[] lifeBalls;
 Ball ball;
 Paddle paddle;
@@ -36,6 +36,8 @@ float brickW;
 float brickH;
 int hScore;
 int level;
+boolean fireBullet;
+
 
 
 void keyPressed()
@@ -43,9 +45,9 @@ void keyPressed()
   if (key >= '0' && key <='9')
   {
     mode = key - '0';
-    println(mode);
     keys[keyCode] = true;
   }
+  
   
   if(mode == 0 || mode == 2 || mode == 3)
   {
@@ -55,6 +57,8 @@ void keyPressed()
   {
     keys[keyCode] = true;
   }
+  
+
 }
 
 
@@ -106,13 +110,26 @@ void draw()
         }
       } 
       
+      /*
       paddle.render();
       paddle.update();
       ball.render();
       ball.update();
+      */
+      for(int i = 0; i < gameObjects.size(); i++)
+      {
+        GameObject go = gameObjects.get(i);
+        go.update();
+        go.render();
+      }
+      
       ballCollisions();
-      //println(bricks2.size());
-     
+      for(int i = bullets.size() - 1 ; i >= 0   ;i --)
+      {
+        Bullet b = bullets.get(i);
+        b.update();
+        b.render();
+      }
       break;
     }
     
@@ -154,13 +171,11 @@ void drawBricks()
   
   if(level == 2)
   {
-    brickW = 70.0f;
-    cols = width / (int) brickW;
     for(int row = 0; row < rows; row ++)
     {
-      for(int col = 0 ; col < cols - 1; col ++)
+      for(int col = 0; col < cols; col ++)
       {
-        float x = 40.0f + (col * (brickW));
+        float x = col * (brickW);
         float y = (40.0f * (row + 1)) + (row * brickH);
         Brick b2 = new Brick(x, y, brickW, brickH);
         bricks.add(b2);
@@ -229,7 +244,6 @@ void ballCollisions()
        bricks.get(i).lives --;
        hScore += 50;
      }
-     
    }     
 }
 
@@ -264,6 +278,7 @@ void checkLives()
     level = 1;
     removeBricks();
   }
+ 
 }
 
 void displayStatus()
