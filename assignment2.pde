@@ -13,7 +13,7 @@ void setup()
  brickW = 100.0f;
  brickH = 25.0f;
  hScore = 0;
- level = 2;
+ level = 1;
  font = loadFont("AgencyFB-Reg-48.vlw");
  drawBricks();
 }
@@ -36,7 +36,6 @@ float brickW;
 float brickH;
 int hScore;
 int level;
-boolean fireBullet;
 
 
 
@@ -124,14 +123,8 @@ void draw()
       }
       
       ballCollisions();
-      /*
-      for(int i = bullets.size() - 1 ; i >= 0   ;i --)
-      {
-        Bullet b = bullets.get(i);
-        b.update();
-        b.render();
-      }
-      */
+      bulletCollision();
+      
       break;
     }
     
@@ -247,6 +240,21 @@ void ballCollisions()
        hScore += 50;
      }
    }     
+}
+
+void bulletCollision()
+{
+  for(int i = 0; i < bricks.size(); i++)
+  {
+    for(int j = 0; j < bullets.size(); j++)
+    {
+      if(bullets.get(j).pos.y < bricks.get(i).top + bricks.get(i).h)
+      {
+        bricks.get(i).lives --;
+        hScore += 20;
+      }
+    }
+  }
 }
 
 void checkLives()

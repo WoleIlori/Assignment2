@@ -18,9 +18,10 @@ class Bullet extends GameObject
   {
     //forward = new PVector(sin(speed
     pos.y += speed;
-    if(pos.y > height)
+    
+    if(pos.y < 40)
     {
-      pos.y = 0;
+      gameObjects.remove(this);
     }
   }
   

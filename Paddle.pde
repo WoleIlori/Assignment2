@@ -20,7 +20,7 @@ class Paddle extends GameObject
     halfW = w * 0.5f;
     halfH = h * 0.5f;
     c = 255;
-    ammo = 5;
+    ammo = 20;
   }
   
   int elapsed = 12;
