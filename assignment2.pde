@@ -124,12 +124,14 @@ void draw()
       }
       
       ballCollisions();
+      /*
       for(int i = bullets.size() - 1 ; i >= 0   ;i --)
       {
         Bullet b = bullets.get(i);
         b.update();
         b.render();
       }
+      */
       break;
     }
     

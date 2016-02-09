@@ -9,12 +9,6 @@ class Paddle extends GameObject
   char fire;
   int ammo;
   
-  /*
-  Paddle()
-  {
-    this();
-  }
-  */
   
   Paddle(float w, float h, float x, float y, char fire)
   {
@@ -66,9 +60,9 @@ class Paddle extends GameObject
           Bullet bullet = new Bullet();
           bullet.pos.x = pos.x;
           bullet.pos.y = pos.y;
-          bullets.add(bullet);
+          //bullets.add(bullet);
           elapsed = 0;
-          //gameObjects.add(bullet);
+          gameObjects.add(bullet);
           ammo --;
         }
       }
