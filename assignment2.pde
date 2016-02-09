@@ -13,6 +13,7 @@ void setup()
  brickW = 100.0f;
  brickH = 25.0f;
  hScore = 0;
+ launch = false;
  level = 1;
  font = loadFont("AgencyFB-Reg-48.vlw");
  drawBricks();
@@ -20,7 +21,6 @@ void setup()
 
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 ArrayList<Brick> bricks = new ArrayList<Brick>();
-ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 Ball[] lifeBalls;
 Ball ball;
 Paddle paddle;
@@ -36,6 +36,7 @@ float brickW;
 float brickH;
 int hScore;
 int level;
+boolean launch;
 
 
 
@@ -72,8 +73,6 @@ void draw()
       text("1. Play Game", 100, 50);
       text("2. Instructions", 100, 100);
       text("3. High Scores", 100, 150);
-      ball.lives = 3;
-      hScore = 0;
       break;
     }
     
@@ -81,7 +80,10 @@ void draw()
     {
       if(reset)
       {
+        level = 1;
         drawBricks();
+        ball.lives = 3;
+        hScore = 0;
         reset = ! reset;
         println(reset);
       }
@@ -109,12 +111,6 @@ void draw()
         }
       } 
       
-      /*
-      paddle.render();
-      paddle.update();
-      ball.render();
-      ball.update();
-      */
       for(int i = 0; i < gameObjects.size(); i++)
       {
         GameObject go = gameObjects.get(i);
@@ -123,7 +119,6 @@ void draw()
       }
       
       ballCollisions();
-      bulletCollision();
       
       break;
     }
@@ -242,21 +237,6 @@ void ballCollisions()
    }     
 }
 
-void bulletCollision()
-{
-  for(int i = 0; i < bricks.size(); i++)
-  {
-    for(int j = 0; j < bullets.size(); j++)
-    {
-      if(bullets.get(j).pos.y < bricks.get(i).top + bricks.get(i).h)
-      {
-        bricks.get(i).lives --;
-        hScore += 20;
-      }
-    }
-  }
-}
-
 void checkLives()
 {
   //check if one of the bricks is hit 
@@ -283,10 +263,24 @@ void checkLives()
   
   if(ball.lives == 0)
   {
-    reset = true;
-    mode = 0;
-    level = 1;
+    
     removeBricks();
+    background(0);
+    textFont(font, 28);
+    text("Hard luck Try again (y/n)", 150, 250);
+    if(keyPressed)
+    {
+      if(key == 'y')
+      {
+        mode = 1;
+      }
+      
+      if(key == 'n')
+      {
+        mode = 0;
+      }
+      reset = true;
+    }
   }
  
 }
