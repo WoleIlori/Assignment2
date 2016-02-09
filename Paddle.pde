@@ -57,7 +57,7 @@ class Paddle extends GameObject
       pos.y = tmpY;
     }
     
-    if( elapsed > 12)
+    if(level == 2 && elapsed > 12)
     {
       if(keyPressed)
       {

@@ -13,7 +13,7 @@ void setup()
  brickW = 100.0f;
  brickH = 25.0f;
  hScore = 0;
- level = 1;
+ level = 2;
  font = loadFont("AgencyFB-Reg-48.vlw");
  drawBricks();
 }
