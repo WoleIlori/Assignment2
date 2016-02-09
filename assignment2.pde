@@ -288,12 +288,16 @@ void displayStatus()
   line(0, 30, width, 30);
   textFont(font, 18);
   text("Level: " + level, 40, 20);
-  text("Lives: ", 200 , 20);
-  text("Score: "+ hScore, 400, 20);
+  text("Lives: ", 150 , 20);
+  text("Score: "+ hScore, 300, 20);
+  if(level == 2)
+  {
+    text("Ammo:" + paddle.ammo, 400, 20) ;
+  }
   
   for(int i = 0; i < lifeBalls.length; i++)
   {
-    float ballX = 250 + (i * 20);
+    float ballX = 200 + (i * 20);
     Ball ball = new Ball(ballX, 15, 10);
     ball.render(); 
     lifeBalls[i] = ball;
