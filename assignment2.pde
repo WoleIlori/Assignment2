@@ -1,7 +1,7 @@
 void setup()
 {
  size(500, 500); //size(800, 500);
- paddle = new Paddle(width * 0.3f, height * 0.02f, width * 0.5f, height - 20.0f, 'F');
+ paddle = new Paddle(width * 0.3f, height * 0.02f, width * 0.5f, height - 20.0f);
  gameObjects.add(paddle);
  ball = new Ball(20.0f, 250.0f, 480.0f, 10.0f, 0.0f, -5.0f);
  gameObjects.add(ball);
@@ -10,11 +10,11 @@ void setup()
  dir = 0;
  reset = false;
  mCheck = false;
- brickW = 100.0f;
+ brickW = 80.0f;
  brickH = 25.0f;
  hScore = 0;
  move = false;
- level = 2;
+ level = 1;
  font = loadFont("AgencyFB-Reg-48.vlw");
  drawBricks();
 }
@@ -80,12 +80,15 @@ void draw()
     {
       if(reset)
       {
-        level = 1;
+        if(ball.lives == 0)
+        {
+           level = 1;
+           ball.lives = 3;
+           hScore = 0;
+        }
         drawBricks();
         drawPaddle();
         drawBall();
-        ball.lives = 3;
-        hScore = 0;
         reset = ! reset;
         println(reset);
       }
@@ -148,6 +151,22 @@ void drawBricks()
 {
   if(level == 1)
   {
+    brickW = 80.0f;
+    for(int row = 0; row < rows; row ++)
+    {
+      for(int col = 0; col < cols; col ++)
+      {
+        float x = 40.0f + (col * brickW);
+        float y = 80.0f + (row * brickH);
+        Brick b = new Brick(x, y, brickW, brickH);
+        bricks.add(b);
+       }//end inner for
+    }
+  }
+  
+  if(level == 2)
+  {
+    brickW = 100.0f;
     //drawing the bricks
     for(int row = 0; row < rows; row ++)
     {
@@ -161,8 +180,9 @@ void drawBricks()
     }
   }
   
-  if(level == 2)
+  if(level == 3)
   {
+    brickW = 100.0f;
     for(int row = 0; row < rows; row ++)
     {
       for(int col = 0; col < cols; col ++)
@@ -179,7 +199,7 @@ void drawBricks()
 
 void drawPaddle()
 {
-   paddle = new Paddle(width * 0.3f, height * 0.02f, width * 0.5f, height - 20.0f, 'F');
+   paddle = new Paddle(width * 0.3f, height * 0.02f, width * 0.5f, height - 20.0f);
    gameObjects.add(paddle);
 }
 
@@ -266,6 +286,7 @@ void checkLives()
   
   if(bricks.size() == 0 && ball.lives > 0)
   {  
+    removeAll();
     level ++;
     if(level == 3)
     {
@@ -273,11 +294,12 @@ void checkLives()
       level = 1;
     }
     reset = ! reset;
+    keys[keyCode] = false;
+    mCheck = false;
   }
   
   if(ball.lives == 0)
   {
-    
     removeAll();
     background(0);
     textFont(font, 28);

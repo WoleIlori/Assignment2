@@ -6,21 +6,17 @@ class Paddle extends GameObject
   float halfH;
   float halfW;
   float tmpX, tmpY;
-  char fire;
-  int ammo;
   
-  
-  Paddle(float w, float h, float x, float y, char fire)
+  Paddle(float w, float h, float x, float y)
   {
     super(x, y, w);
     this.h = h;
-    this.fire = fire;
     tmpX = pos.x;
     tmpY = pos.y;
     halfW = w * 0.5f;
     halfH = h * 0.5f;
     c = 255;
-    ammo = 20;
+
   }
   
   int elapsed = 12;
