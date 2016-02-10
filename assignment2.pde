@@ -82,7 +82,7 @@ void draw()
       {
         if(ball.lives == 0)
         {
-           level = 1;
+           level --;
            ball.lives = 3;
            hScore = 0;
         }
@@ -97,25 +97,11 @@ void draw()
       stroke(0);
       checkLives();
       
-      
-      if(level == 1)
+      for(int i = 0; i < bricks.size(); i++)
       {
-        for(int i = 0; i < bricks.size(); i++)
-        {
-          bricks.get(i).render();
-        }
+        bricks.get(i).render();
       }
-      
-      
-      
-      if(level == 2)
-      {
-        for(int i = 0; i < bricks.size(); i++)
-        {
-          bricks.get(i).render();
-        }
-      } 
-      
+     
       for(int i = 0; i < gameObjects.size(); i++)
       {
         GameObject go = gameObjects.get(i);
@@ -124,7 +110,6 @@ void draw()
       }
       
       ballCollisions();
-      
       break;
     }
     
@@ -273,8 +258,7 @@ void ballCollisions()
 
 void checkLives()
 {
-  //check if one of the bricks is hit 
-  //remove the brick that got hit
+  //check if one of the bricks is hit and remove brick
   for(int i = 0; i < bricks.size(); i++)
   {
     if(bricks.get(i).lives == 0)
@@ -284,6 +268,7 @@ void checkLives()
     }
   }
   
+  //if the bricks are succesully cleared move on to next level
   if(bricks.size() == 0 && ball.lives > 0)
   {  
     removeAll();
@@ -298,6 +283,7 @@ void checkLives()
     mCheck = false;
   }
   
+  //if bricks are not successfuly cleared it goes back to the previous level
   if(ball.lives == 0)
   {
     removeAll();
