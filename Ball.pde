@@ -6,7 +6,7 @@ class Ball extends GameObject
   float tmpX, tmpY;
   
   Ball(float bSize, float x, float y, float sHeight ,float xSpeed, float ySpeed)
-  {
+  {  
     super(x, (y - (sHeight / 2) - (bSize * 0.5f)), bSize);
     this.bRadius = this.w * 0.5f;
     lives = 3;

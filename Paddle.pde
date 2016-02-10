@@ -26,7 +26,7 @@ class Paddle extends GameObject
     fill(c);
     left = pos.x - halfW;
     top = pos.y - halfH;
-    rect(left, top, w, h);  
+    rect(left, top, w, h, 60);  
   }
   
   void update()

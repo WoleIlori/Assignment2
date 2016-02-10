@@ -1,7 +1,7 @@
 void setup()
 {
  size(500, 500); //size(800, 500);
- paddle = new Paddle(width * 0.3f, height * 0.02f, width * 0.5f, height - 20.0f);
+ paddle = new Paddle(width * 0.2f, height * 0.02f, width * 0.5f, height - 20.0f);
  gameObjects.add(paddle);
  ball = new Ball(20.0f, 250.0f, 480.0f, 10.0f, 0.0f, -5.0f);
  gameObjects.add(ball);
@@ -14,7 +14,7 @@ void setup()
  brickH = 25.0f;
  hScore = 0;
  move = false;
- level = 1;
+ level = 3;
  font = loadFont("AgencyFB-Reg-48.vlw");
  drawBricks();
 }
@@ -273,7 +273,7 @@ void checkLives()
   {  
     removeAll();
     level ++;
-    if(level == 3)
+    if(level == 4)
     {
       mode = 0;
       level = 1;
