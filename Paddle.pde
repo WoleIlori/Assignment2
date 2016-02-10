@@ -50,24 +50,6 @@ class Paddle extends GameObject
       pos.x = tmpX;
       pos.y = tmpY;
     }
-    
-    if(level == 2 && elapsed > 12 && ammo > 0)
-    {
-      if(keyPressed)
-      {
-        if(key == 'f')
-        {
-          Bullet bullet = new Bullet();
-          bullet.pos.x = pos.x;
-          bullet.pos.y = pos.y;
-          //bullets.add(bullet);
-          elapsed = 0;
-          gameObjects.add(bullet);
-          ammo --;
-        }
-      }
-    }
-    elapsed ++;
   }
   
 }

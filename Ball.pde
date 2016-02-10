@@ -32,9 +32,9 @@ class Ball extends GameObject
   {
     if(keys[' '])
     {
-      pos.x += speed.x;
-      pos.y += speed.y;
-      mCheck = true;
+        pos.x += speed.x;
+        pos.y += speed.y;
+        mCheck = true;
     }
     
      //changing directions after hitting the top
@@ -64,7 +64,9 @@ class Ball extends GameObject
       pos.x = tmpX;
       pos.y = tmpY;
       lives --;
+      move = ! move;
       mCheck = false;
+      keys[keyCode] = false;
       speed.x = 0;   
       speed.y = - speed.y;
     }

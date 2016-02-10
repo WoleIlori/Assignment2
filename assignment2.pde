@@ -13,8 +13,8 @@ void setup()
  brickW = 100.0f;
  brickH = 25.0f;
  hScore = 0;
- launch = false;
- level = 1;
+ move = false;
+ level = 2;
  font = loadFont("AgencyFB-Reg-48.vlw");
  drawBricks();
 }
@@ -36,7 +36,7 @@ float brickW;
 float brickH;
 int hScore;
 int level;
-boolean launch;
+boolean move;
 
 
 
@@ -49,7 +49,7 @@ void keyPressed()
   }
   
   
-  if(mode == 0 || mode == 2 || mode == 3)
+  if(mode == 0 || mode == 2)
   {
     keys[keyCode] = false;
   }
@@ -82,6 +82,8 @@ void draw()
       {
         level = 1;
         drawBricks();
+        drawPaddle();
+        drawBall();
         ball.lives = 3;
         hScore = 0;
         reset = ! reset;
@@ -165,7 +167,7 @@ void drawBricks()
     {
       for(int col = 0; col < cols; col ++)
       {
-        float x = col * (brickW);
+        float x = (col * brickW);
         float y = (40.0f * (row + 1)) + (row * brickH);
         Brick b2 = new Brick(x, y, brickW, brickH);
         bricks.add(b2);
@@ -173,6 +175,18 @@ void drawBricks()
     }
   }
         
+}
+
+void drawPaddle()
+{
+   paddle = new Paddle(width * 0.3f, height * 0.02f, width * 0.5f, height - 20.0f, 'F');
+   gameObjects.add(paddle);
+}
+
+void drawBall()
+{
+   ball = new Ball(20.0f, 250.0f, 480.0f, 10.0f, 0.0f, -5.0f);
+   gameObjects.add(ball);
 }
 
 void ballCollisions()
@@ -264,10 +278,11 @@ void checkLives()
   if(ball.lives == 0)
   {
     
-    removeBricks();
+    removeAll();
     background(0);
     textFont(font, 28);
     text("Hard luck Try again (y/n)", 150, 250);
+    text("High Score:" +hScore, 150, 280); 
     if(keyPressed)
     {
       if(key == 'y')
@@ -294,10 +309,6 @@ void displayStatus()
   text("Level: " + level, 40, 20);
   text("Lives: ", 150 , 20);
   text("Score: "+ hScore, 300, 20);
-  if(level == 2)
-  {
-    text("Ammo:" + paddle.ammo, 400, 20) ;
-  }
   
   for(int i = 0; i < lifeBalls.length; i++)
   {
@@ -308,11 +319,16 @@ void displayStatus()
   }
 }
   
-void removeBricks()
+void removeAll()
 {
   for(int i = bricks.size() - 1; i >= 0; i--)
   {
     bricks.remove(i);
+  }
+  
+  for(int i = gameObjects.size() - 1; i >= 0; i--)
+  {
+    gameObjects.remove(i);
   }
 }
 
