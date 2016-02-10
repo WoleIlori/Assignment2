@@ -5,22 +5,25 @@ void setup()
  gameObjects.add(paddle);
  ball = new Ball(20.0f, 250.0f, 480.0f, 10.0f, 0.0f, -5.0f);
  gameObjects.add(ball);
+ image = loadImage("brickout300.jpg");
  rows = 3;
  cols = 5;
  dir = 0;
- reset = false;
- mCheck = false;
  brickW = 80.0f;
  brickH = 25.0f;
  hScore = 0;
  move = false;
- level = 3;
+ reset = false;
+ mCheck = false;
+ pic = false;
+ level = 1;
  font = loadFont("AgencyFB-Reg-48.vlw");
  drawBricks();
 }
 
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 ArrayList<Brick> bricks = new ArrayList<Brick>();
+PImage image;
 Ball[] lifeBalls;
 Ball ball;
 Paddle paddle;
@@ -29,7 +32,6 @@ boolean reset;
 int mode;
 float dir;
 boolean mCheck;
-PFont font;
 int rows;
 int cols;
 float brickW;
@@ -37,8 +39,16 @@ float brickH;
 int hScore;
 int level;
 boolean move;
+boolean pic;
+PFont font;
 
-
+void mousePressed()
+{
+  if(!pic)
+  {
+    pic = true;
+  }
+}
 
 void keyPressed()
 {
@@ -64,73 +74,74 @@ void keyPressed()
 
 void draw()
 {
-  switch(mode)
+  if(pic)
   {
-    case 0:
-    {
-      background(0);
-      textFont(font, 32);
-      text("1. Play Game", 100, 50);
-      text("2. Instructions", 100, 100);
-      text("3. High Scores", 100, 150);
-      break;
-    }
     
-    case 1:
+    switch(mode)
     {
-      if(reset)
+      case 0:
       {
-        if(ball.lives == 0)
+        background(0);
+        textFont(font, 32);
+        text("1. Play Game", 100, 50);
+        text("2. Instructions", 100, 100);
+        text("3. High Scores", 100, 150);
+        break;
+      }
+      
+      case 1:
+      {
+        if(reset)
         {
-           level --;
-           ball.lives = 3;
-           hScore = 0;
+          if(ball.lives == 0)
+          {
+             level --;
+             ball.lives = 3;
+             hScore = 0;
+          }
+          drawBricks();
+          drawPaddle();
+          drawBall();
+          reset = ! reset;
         }
-        drawBricks();
-        drawPaddle();
-        drawBall();
-        reset = ! reset;
-        println(reset);
-      }
-      background(0);
-      displayStatus();
-      stroke(0);
-      checkLives();
-      
-      for(int i = 0; i < bricks.size(); i++)
-      {
-        bricks.get(i).render();
-      }
-     
-      for(int i = 0; i < gameObjects.size(); i++)
-      {
-        GameObject go = gameObjects.get(i);
-        go.update();
-        go.render();
+        background(0);
+        displayStatus();
+        stroke(0);
+        checkLives();
+        
+        for(int i = 0; i < bricks.size(); i++)
+        {
+          bricks.get(i).render();
+        }
+       
+        for(int i = 0; i < gameObjects.size(); i++)
+        {
+          GameObject go = gameObjects.get(i);
+          go.update();
+          go.render();
+        }
+        
+        ballCollisions();
+        break;
       }
       
-      ballCollisions();
-      break;
+      case 2:
+      {
+        background(0);
+        textFont(font, 28);
+        text("Press 'Space' bar to launch ball.\nUse the mouse to move the paddle\nand collect powerups", 100, 200);
+        break;
+      }
     }
+  }
+  else
+  {
+    image(image, 0, 0, width, height);
+    textFont(font, 28);
+    text("Click to continue", 150, 200);
+  }
     
-    case 2:
-    {
-      background(0);
-      textFont(font, 28);
-      text("Press 'Space' bar to launch ball.\nUse the mouse to move the paddle\nand collect powerups", 100, 200);
-      break;
-    }
-    
-    case 3:
-    {
-      background(0);
-      textFont(font, 28);
-      text("High Score", 200, 150);
-      break;
-    }
-    
-  }//end switch
-}
+}//end draw
 
 void drawBricks()
 {
@@ -184,7 +195,7 @@ void drawBricks()
 
 void drawPaddle()
 {
-   paddle = new Paddle(width * 0.3f, height * 0.02f, width * 0.5f, height - 20.0f);
+   paddle = new Paddle(width * 0.2f, height * 0.02f, width * 0.5f, height - 20.0f);
    gameObjects.add(paddle);
 }
 
@@ -264,7 +275,6 @@ void checkLives()
     if(bricks.get(i).lives == 0)
     {
       bricks.remove(i);
-      println(bricks.size());
     }
   }
   
@@ -342,6 +352,7 @@ void removeAll()
 
 void mouseMoved()
 {
+  //the paddle can only move when the ball is launched
   if(mCheck == true)
   {
     paddle.pos.x = mouseX;
